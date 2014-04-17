@@ -5,18 +5,18 @@ Distributed framework to extract structured data from Wikipedia
 
 Before building, please perform these steps:
 
-<pre>
+```bash
 git submodule init
 git submodule update --remote
 cd extraction-framework
-git am --signoff < namespace_equals_fix.patch
-</pre>
+git am --signoff < namespace_equal_fix.patch
+```
 
 After this, build the repos!
 
-<pre>
+```bash
 cd ..
 mvn install
-</pre>
+```
 
 Tested with liwiki and RedirectExtractor.
