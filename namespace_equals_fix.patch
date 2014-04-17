@@ -1,0 +1,29 @@
+From ed20d554822fc3093380218c78b00348f82c2539 Mon Sep 17 00:00:00 2001
+From: Nilesh Chakraborty <nilesh@nileshc.com>
+Date: Fri, 18 Apr 2014 03:15:00 +0530
+Subject: [PATCH] Override Namespace.equals method so that it doesn't cause
+ problems after serialization roundtrip
+
+---
+ .../dbpedia/extraction/wikiparser/Namespace.scala  |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+
+diff --git a/core/src/main/scala/org/dbpedia/extraction/wikiparser/Namespace.scala b/core/src/main/scala/org/dbpedia/extraction/wikiparser/Namespace.scala
+index b2c03de..57c4ea3 100644
+--- a/core/src/main/scala/org/dbpedia/extraction/wikiparser/Namespace.scala
++++ b/core/src/main/scala/org/dbpedia/extraction/wikiparser/Namespace.scala
+@@ -21,6 +21,11 @@ class Namespace private[wikiparser](val code: Int, val name: String, dbpedia: Bo
+     else Namespaces.names(lang).getOrElse(code, throw new IllegalArgumentException("namespace number "+code+" not found for language '"+lang.wikiCode+"'")) 
+   
+   override def toString = code+"/"+name
++
++  override def equals(other: Any): Boolean = other match {
++    case that: Namespace => (code == that.code && name == that.name)
++    case _ => false
++  }
+ }
+   
+ /**
+-- 
+1.7.5.4
+
